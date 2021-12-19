@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{--<x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -57,4 +57,32 @@
             </div>
         </form>
     </x-jet-authentication-card>
-</x-guest-layout>
+</x-guest-layout>--}}
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<div class="register">
+    <div style="padding-bottom: 10px;">
+        @if ($errors->any())
+            <div >
+                <div class="font-medium text-red-600">{{ __('Whoops! Something went wrong.') }}</div>
+
+                <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @else
+            <img width="300" height="46" src="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png" class="vc_single_image-img attachment-medium" alt="" loading="lazy" srcset="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png 300w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-600x92.png 600w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-1024x157.png 1024w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-768x117.png 768w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia.png 1472w" sizes="(max-width: 300px) 100vw, 300px">
+        @endif
+    </div>
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+    	<input id="email" type="email" name="email" :value="old('email')" required placeholder="Email" required="required" />
+        <input type="password" id="password" name="password" :value="old('password')" placeholder="Password" required="required" />
+        <input type="password" id="password_confirmation" name="password_confirmation" :value="old('password_confirmation')"  placeholder="password_confirmation" required="required" />
+        <input type="text" id="name" name="name" placeholder="name" :value="old('name')" required="required" />
+        <input type="text" id="telefono" name="telefono" placeholder="telefono" :value="old('telefono')" required="required" />
+        <input type="text"  id="identificacion" name="identificacion" placeholder="identificacion" :value="old('identificacion')" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large" >Register.</button>
+    </form>
+</div>

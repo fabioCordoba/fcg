@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{--<x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -45,4 +45,24 @@
             </div>
         </form>
     </x-jet-authentication-card>
-</x-guest-layout>
+</x-guest-layout>--}}
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<div class="login">
+    <div style="padding-bottom: 10px;">
+        <img width="300" height="46" src="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png" class="vc_single_image-img attachment-medium" alt="" loading="lazy" srcset="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png 300w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-600x92.png 600w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-1024x157.png 1024w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-768x117.png 768w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia.png 1472w" sizes="(max-width: 300px) 100vw, 300px">
+    </div>
+    <div>
+        <div class="col">
+            <a type="button" class="btn btn-dark btn-block btn-large" href="{{url('auth/github/redirect')}}">Iniciar Sesion con Github</a>
+            <br>
+            <a type="button" class="btn btn-danger btn-block btn-large" href="{{url('auth/google/redirect')}}">Iniciar Sesion con Google</a>
+        </div>
+    </div>
+    <hr>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+    	<input id="email" type="email" name="email" :value="old('email')" required placeholder="Email" required="required" />
+        <input type="password" name="password" placeholder="Password" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">Login.</button>
+    </form>
+</div>
