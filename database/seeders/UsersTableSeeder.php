@@ -24,13 +24,13 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
 
-        $admin->assignRole('ADMINISTRADOR');
+        $admin->assignRole('ROOT');
 
         $asesor = User::create([
             'identificacion' => '0000000002',
-            'name' => 'CLIENTE UNO',
-            'telefono' => '310',
-            'email' => 'CLIENTE@gmail.com',
+            'name' => 'Cliente UNO',
+            'telefono' => '3100000000',
+            'email' => 'cliente@gmail.com',
             'password' => Hash::make('CLIENTE'),
         ]);
 

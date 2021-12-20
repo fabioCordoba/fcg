@@ -20,3 +20,18 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::group(['middleware' => ['role:ROOT|ADMINISTRADOR']], function () {
+    Route::middleware(['auth:sanctum', 'verified'])->get('/users', function () {
+        return view('users');
+    })->name('users');
+});
+
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/product', function () {
+    return view('product');
+})->name('product');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/pedidos', function () {
+    return view('pedidos');
+})->name('pedidos');
