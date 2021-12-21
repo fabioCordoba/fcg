@@ -17,4 +17,9 @@ class Products extends Model
         'foto',
         'estado',
     ];
+
+    public function subCategoryProduct()
+    {
+        return $this->belongsTo('App\Models\Subcategoria', 'subcategoria_id');
+    }
 }

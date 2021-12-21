@@ -16,4 +16,14 @@ class Subcategoria extends Model
         'foto',
         'estado'
     ];
+
+    public function Category()
+    {
+        return $this->belongsTo('App\Models\Categoria', 'categoria_id');
+    }
+
+    public function ProductSubCategory()
+    {
+        return $this->hasMany('App\Models\Products', 'subcategoria_id');
+    }
 }

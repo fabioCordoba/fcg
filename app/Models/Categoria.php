@@ -15,4 +15,9 @@ class Categoria extends Model
         'foto',
         'estado'
     ];
+
+    public function subCategory()
+    {
+        return $this->hasMany('App\Models\Subcategoria', 'categoria_id');
+    }
 }
