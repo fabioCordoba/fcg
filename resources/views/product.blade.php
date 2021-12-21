@@ -11,7 +11,10 @@
                 @role('ROOT|ADMINISTRADOR')
                     @livewire('productos')
                 @endrole
-                
+
+                @role('CLIENTE')
+                    @livewire('stock')
+                @endrole
             </div>
         </div>
     </div>

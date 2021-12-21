@@ -58,22 +58,23 @@
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 <div class="register">
+    @if ($errors->any())
+        <div class="alert alert-warning" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+            </span>
+        </div>
+    @else
+        <img width="300" height="46" src="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png" class="vc_single_image-img attachment-medium" alt="" loading="lazy" srcset="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png 300w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-600x92.png 600w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-1024x157.png 1024w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-768x117.png 768w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia.png 1472w" sizes="(max-width: 300px) 100vw, 300px">
+    @endif
     <div style="padding-bottom: 10px;">
-        @if ($errors->any())
-            <div >
-                <div class="font-medium text-red-600">{{ __('Whoops! Something went wrong.') }}</div>
-
-                <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @else
-            <img width="300" height="46" src="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png" class="vc_single_image-img attachment-medium" alt="" loading="lazy" srcset="https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-300x46.png 300w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-600x92.png 600w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-1024x157.png 1024w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia-768x117.png 768w, https://cloudpbx.com.co/wp-content/uploads/2021/02/tipografia.png 1472w" sizes="(max-width: 300px) 100vw, 300px">
-        @endif
     </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf

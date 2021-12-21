@@ -34,6 +34,13 @@ window.addEventListener('UserUpdate', event => {
 });
 
 /**
+ * Evento para Notificar que se agrego prd al carrito
+ */
+ window.addEventListener('success-car', event => {
+    MsgDetallado('alert-success', 'Producto agregado al carrito...');
+});
+
+/**
  * Evento para Notificar que el Registro se Elimino con exito
  */
  window.addEventListener('Delete', event => {

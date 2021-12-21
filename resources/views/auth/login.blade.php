@@ -46,6 +46,7 @@
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 <div class="login">
     <div style="padding-bottom: 10px;">
@@ -53,8 +54,6 @@
     </div>
     <div>
         <div class="col">
-            <a type="button" class="btn btn-dark btn-block btn-large" href="{{url('auth/github/redirect')}}">Iniciar Sesion con Github</a>
-            <br>
             <a type="button" class="btn btn-danger btn-block btn-large" href="{{url('auth/google/redirect')}}">Iniciar Sesion con Google</a>
         </div>
     </div>
@@ -65,4 +64,16 @@
         <input type="password" name="password" placeholder="Password" required="required" />
         <button type="submit" class="btn btn-primary btn-block btn-large">Login.</button>
     </form>
+    @if ($errors->any())
+        <div class="alert alert-warning" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+            </span>
+        </div>
+        <br>
+    @endif
 </div>
