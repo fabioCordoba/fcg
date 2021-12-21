@@ -19,7 +19,7 @@
                     </div>
                     <br>
                     @endif
-                    @if ($user)
+                    @if ($swstore)
                         <form  >
                         {{csrf_field()}}
 

@@ -14,29 +14,32 @@ class Productos extends Component
 {
     use WithFileUploads;
 
-    public $user, $catego, $subCat, $nombre, $precio, $Descripcion, $foto, $swstore;
+    public $user, $product, $catego, $subCat, $nombre, $precio, $Descripcion, $foto, $swstore;
+    protected $listeners = ['say-delete' => 'delete'];
     
     public function abrirModal($id, $modal){
 
-        
-        $this->user = User::find($id);
-        
         if($modal == 'Edit'){
-
+            $this->product = Products::find($id);
             $this->swstore = 'Edit';
-            
-            dd($id, $modal);
 
-            /*$this->roles = Role::get()->pluck('name');
-            $this->name = $this->user->name;
-            $this->email = $this->user->email;
-            $this->identificacion = $this->user->identificacion;
-            $this->telefono = $this->user->telefono;
-            $this->id_user = $id;
-            $this->roles->prepend($this->user->roles->implode('name', ','));*/
+            $this->catego = $this->product->subCategoryProduct->Category->id;
+            $this->subCat = $this->product->subcategoria_id;
+            $this->nombre = $this->product->nombre;
+            $this->Descripcion = $this->product->Descripcion;
+            $this->precio = $this->product->precio;
+            $this->foto = $this->product->foto;
+            
+            $this->dispatchBrowserEvent('openModal', ['modal' => 'Create']);
 
         }else if($modal == 'Create'){
+            
             $this->swstore = 'Create';
+            $this->dispatchBrowserEvent('openModal', ['modal' => $modal]);
+            
+        }else if($modal == 'Show'){
+            $this->product = Products::find($id);
+            $this->swstore = 'Show';
             $this->dispatchBrowserEvent('openModal', ['modal' => $modal]);
             
         }
@@ -44,12 +47,23 @@ class Productos extends Component
     }
 
     public function Store(){
-        $validatedData = $this->validate([
-            'nombre' => 'required|unique:products',
-            'precio' => 'required',
-            'Descripcion' => 'required',
-            'foto' => 'required'
-        ]);
+
+        if($this->swstore == 'Edit'){
+            $validatedData = $this->validate([
+                'nombre' => 'required',
+                'precio' => 'required',
+                'Descripcion' => 'required',
+                
+            ]);
+        }else{
+            $validatedData = $this->validate([
+                'nombre' => 'required|unique:products',
+                'precio' => 'required',
+                'Descripcion' => 'required',
+                'foto' => 'required'
+            ]);
+
+        }
 
 
         if($this->swstore == 'Create'){
@@ -68,25 +82,28 @@ class Productos extends Component
             $this->closeModal('Create');
             $this->dispatchBrowserEvent('success');
 
+        }else if($this->swstore == 'Edit'){
+
+            if($this->foto != $this->product->foto){
+                $path = $this->foto->store('images/fotos', 'public_up');
+            }else{
+                $path = $this->foto;
+            }
+
+            Products::find($this->product->id)->update([
+                'subcategoria_id' => $this->subCat,
+                'nombre' => $this->nombre,
+                'Descripcion' => $this->Descripcion,
+                'precio' => $this->precio,
+                'foto' => $path,
+                'estado' => 'Activo'
+
+            ]);
+
+            $this->closeModal('Create');
+            $this->dispatchBrowserEvent('success');
+
         }
-
-
-        /*if($this->rol != NULL){
-
-            User::find($this->id_user)->update([
-                'name' => $this->name ,
-                'email' => $this->email,
-            ]);
-
-             User::find($this->id_user)->syncRoles($this->rol);
-            
-        }else{
-
-            User::find($this->id_user)->update([
-                'name' => $this->name ,
-                'email' => $this->email,
-            ]);
-        }*/
 
     }
 
@@ -105,10 +122,23 @@ class Productos extends Component
         $this->swstore = null;
     }
 
+    public function delProduct($id){
+        $this->dispatchBrowserEvent('eliminar', ['id' => $id]);
+    }
+
+    public function delete($id){
+
+        Products::find($id)->update([
+            'estado' => 'Eliminado'
+        ]);
+
+        $this->dispatchBrowserEvent('Delete');
+    }
+
     public function render()
     {
         return view('livewire.productos',[
-            'products' => Products::paginate(10),
+            'products' => Products::orderBy('id', 'DESC')->paginate(10),
             'categorias' => Categoria::all(),
             'subcategoria' => Subcategoria::all()
         ]);
