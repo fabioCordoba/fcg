@@ -8,14 +8,23 @@ use App\Models\User;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
 use Illuminate\Support\Collection;
+use Livewire\WithPagination;
 
 class Stock extends Component
 {
+    use WithPagination;
 
-    public $textBusqueda, $carrito, $productemp;
+    public $textBusqueda, $carrito, $productemp, $productss, $type;
+
+    public function __construct()
+    {
+        //$this->products = Products::paginate(4)->where('estado','Activo')->orderBy('id', 'DESC');
+        
+    }
 
     public function mount(){
-        $this->textBusqueda = 'Dulces';
+        $this->textBusqueda = 'Todos Los Productos';
+        $this->type = 'all';
     }
 
     public function addCar($id){
@@ -54,8 +63,21 @@ class Stock extends Component
         return $this->carrito;
     }
 
-    public function verCar(){
-        //dd($this->carrito);
+    public function verprod($id, $modal){
+        $this->productemp = Products::find($id);
+        $this->dispatchBrowserEvent('openModal', ['modal' => $modal]);
+    }
+
+    public function closeModal($modal){
+        $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
+        $this->productemp = null;
+    }
+
+    public function search(){
+        $this->products = Products::where('estado','Activo')
+            ->where('nombre', 'LIKE', '%' . $this->textBusqueda . '%')
+            ->orderBy('id', 'DESC')->get();
+        $this->type = 'search';
     }
 
     public function plusCar($id,$var){
@@ -82,10 +104,22 @@ class Stock extends Component
 
     public function render()
     {
-        return view('livewire.stock',[
-            'products' => Products::where('estado','Activo')->orderBy('id', 'DESC')->paginate(20),
-            'categorias' => Categoria::all(),
-            'subcategoria' => Subcategoria::all()
-        ]);
+        
+        if($this->type == 'all'){
+            
+            return view('livewire.stock',[
+                'products' => Products::where('estado','Activo')->orderBy('id', 'DESC')->paginate(20),
+                'categorias' => Categoria::all(),
+                'subcategoria' => Subcategoria::all()
+            ]);
+            
+        }else if($this->type == 'search'){
+            return view('livewire.stock',[
+                'products' => $this->productss,
+                'categorias' => Categoria::all(),
+                'subcategoria' => Subcategoria::all()
+            ]);
+        }
+
     }
 }
