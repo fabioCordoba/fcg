@@ -14,10 +14,11 @@ class Stock extends Component
 {
     use WithPagination;
 
-    public $textBusqueda, $carrito, $productemp, $productss, $type;
+    public $textBusqueda, $carrito, $productemp, $productss, $type, $contVerP;
 
     public function __construct()
     {
+        
         //$this->products = Products::paginate(4)->where('estado','Activo')->orderBy('id', 'DESC');
         
     }
@@ -25,19 +26,31 @@ class Stock extends Component
     public function mount(){
         $this->textBusqueda = 'Todos Los Productos';
         $this->type = 'all';
+        $this->contVerP = 1;
     }
 
-    public function addCar($id){
+    public function addCar($id, $sw){
 
         $prodTemp = Products::find($id);
 
-        $temp = [
-            'id' => $prodTemp->id,
-            'nombre' => $prodTemp->nombre,
-            'precio' => $prodTemp->precio,
-            'foto' => $prodTemp->foto,
-            'cant' => 1
-        ];
+        if($this->contVerP > 1){
+            $temp = [
+                'id' => $prodTemp->id,
+                'nombre' => $prodTemp->nombre,
+                'precio' => $prodTemp->precio,
+                'foto' => $prodTemp->foto,
+                'cant' => $this->contVerP
+            ];
+        }else{
+            $temp = [
+                'id' => $prodTemp->id,
+                'nombre' => $prodTemp->nombre,
+                'precio' => $prodTemp->precio,
+                'foto' => $prodTemp->foto,
+                'cant' => 1
+            ];
+        }
+
 
         $cont = 0;
 
@@ -54,12 +67,16 @@ class Stock extends Component
                 $this->carrito->push($temp);
             }
 
-
         }else{
             $this->carrito = collect([$temp]);
         }
 
         $this->dispatchBrowserEvent('success-car');
+
+        if($sw == 'verprod'){
+            $this->closeModal($sw);
+        }
+
         return $this->carrito;
     }
 
@@ -71,6 +88,7 @@ class Stock extends Component
     public function closeModal($modal){
         $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
         $this->productemp = null;
+        $this->contVerP = 1;
     }
 
     public function search(){
@@ -78,6 +96,20 @@ class Stock extends Component
             ->where('nombre', 'LIKE', '%' . $this->textBusqueda . '%')
             ->orderBy('id', 'DESC')->get();
         $this->type = 'search';
+    }
+
+    public function plusVerP($id,$var){
+        
+        if($var == 'mas'){
+            $this->contVerP = $this->contVerP + 1;
+        }else if($var == 'menos'){
+            if($this->contVerP != 1){
+                $this->contVerP = $this->contVerP - 1;
+            }else{
+                $this->contVerP = 1;
+            }
+        }
+        //dd($id,$var);
     }
 
     public function plusCar($id,$var){
@@ -100,6 +132,12 @@ class Stock extends Component
             }
         }
 
+    }
+
+    public function orderNow($id)
+    {
+        $orden = Products::find($id);
+        return redirect()->route('pay', ['orden' => $orden, 'cant' => $this->contVerP]);
     }
 
     public function render()

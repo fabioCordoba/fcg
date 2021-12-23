@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Products;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,6 @@ Route::group(['middleware' => ['role:ROOT|ADMINISTRADOR']], function () {
     })->name('users');
 });
 
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/product', function () {
     return view('product');
 })->name('product');
@@ -35,3 +35,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/product', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/pedidos', function () {
     return view('pedidos');
 })->name('pedidos');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/pay/{orden}/cant/{cant}', function (Products $orden, $cant) {
+    return view('pay',compact('orden','cant'));
+})->name('pay');
+
+
