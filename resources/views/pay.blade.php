@@ -15,7 +15,7 @@
                                 <div class="w-full h-64 md:w-1/2 lg:h-96">
                                     <img class="h-full w-full rounded-md object-cover max-w-lg mx-auto" src="{{asset($orden->foto)}}" alt="{{$orden->nombre}}">
                                 </div>
-                                <div class="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2">
+                                <div class="w-full max-w-lg mx-auto mt-2 md:ml-8 md:mt-0 md:w-1/2">
                                     <h3 class="text-indigo-700 uppercase text-lg">{{$orden->nombre}}</h3>
                                     <h4 class="text-gray-600  text-sm">{{$orden->subCategoryProduct->Category->name}}/{{$orden->subCategoryProduct->name}}</h4>
                                         <p class="text-gray-500  mx-1">
@@ -70,22 +70,38 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row" colspan="2" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">Total:</th>
-                                                        <td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left"><span><span>$</span>{{($orden->precio * $cant) + $domi }}</span></td>
+                                                        <td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left"><span><span>$</span>{{$total = ($orden->precio * $cant) + $domi }}</span></td>
                                                     </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="mt-3">
-                                        <label class="text-gray-700 text-sm" for="count">Pedidos:</label>
-                                        <div class="flex items-center mt-1">
-                                            <span class="text-red-500 text-sm mx-1">Anticipacion de 2 Dias</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center mt-6">
-                                        <button class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500" wire:click="orderNow({{$orden->id}})">Order Now</button>
+
+                                    <div class="flex items-center mt-6 mb-2">
+                                        <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+                                            <input name="merchantId"      type="hidden"  value="508029"   >
+                                            <input name="accountId"       type="hidden"  value="512321" >
+                                            <input name="description"     type="hidden"  value="{{$orden->nombre}} X {{$cant}}"  >
+                                            <input name="referenceCode"   type="hidden"  value="fcgPayUON{{$orden->id}}" >
+                                            <input name="amount"          type="hidden"  value="{{$total}}"   >
+                                            <input name="tax"             type="hidden"  value="3193"  >
+                                            <input name="taxReturnBase"   type="hidden"  value="16806" >
+                                            <input name="currency"        type="hidden"  value="COP" >
+                                            <input name="signature"       type="hidden"  value="{{hash('md5', '4Vj8eK4rloUd272L48hsrarnUA~508029~fcgPayUON'.$orden->id.'~'.$total.'~COP')}}"  >
+                                            <input name="test"            type="hidden"  value="0" >
+                                            <input name="buyerEmail"      type="hidden"  value="{{Auth::user()->email}}" >
+                                            <input name="responseUrl"     type="hidden"  value="http://www.test.com/response" >
+                                            <input name="confirmationUrl" type="hidden"  value="http://www.test.com/confirmation" >
+                                            <input name="shippingAddress"    type="hidden"  value="calle 93 n 47 - 65"   >
+                                            <input name="shippingCity"       type="hidden"  value="Bogotá" >
+                                            <input name="shippingCountry"    type="hidden"  value="CO"  >
+                                            <input name="Submit"          type="submit"  value="Continuar con el Pago" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
+                                          </form>
+                                        {{--<button class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500" wire:click="orderNow({{$orden->id}})">Continuar con el Pago</button>--}}
                                         
                                     </div>
+                                    
+                                      
                                 </div>
                             </div>
                         @endif

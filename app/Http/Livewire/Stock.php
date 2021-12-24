@@ -7,8 +7,11 @@ use App\Models\Products;
 use App\Models\User;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
+use App\Models\Orden;
+use App\Models\OrdenProductos;
 use Illuminate\Support\Collection;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class Stock extends Component
 {
@@ -138,6 +141,36 @@ class Stock extends Component
     {
         $orden = Products::find($id);
         return redirect()->route('pay', ['orden' => $orden, 'cant' => $this->contVerP]);
+    }
+
+    public function orderCar(){
+
+        $ultimo = Orden::all();
+        
+        if($ultimo->count() > 0){
+            $codigo = ($ultimo->last()->id + 1);
+        }else{
+            $codigo = 1;
+        }
+        
+        $codigo = sprintf("%05d", $codigo);
+        $orden = Orden::create([
+            'codigo' => $codigo,
+            'estado' => 'En Proceso',
+            'user_id' => Auth::user()->id
+        ]);
+
+        foreach ($this->carrito as $key => $value) {
+            
+            OrdenProductos::create([
+                'orden_id' => $orden->id,
+                'product_id' => $value['id'],
+                'cant' => $value['cant']
+            ]);
+        }
+
+        //dd($orden, $codigo, $orden->Products);
+        return redirect()->route('carrito', ['orden' => $orden]);
     }
 
     public function render()

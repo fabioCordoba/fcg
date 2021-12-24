@@ -22,4 +22,10 @@ class Products extends Model
     {
         return $this->belongsTo('App\Models\Subcategoria', 'subcategoria_id');
     }
+
+    public function OrdenProduct()
+    {
+        return $this->hasMany('App\Models\OrdenProductos', 'product_id');
+    }
+
 }

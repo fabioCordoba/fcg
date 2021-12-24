@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Products;
+use App\Models\Orden;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +40,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/pedidos', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/pay/{orden}/cant/{cant}', function (Products $orden, $cant) {
     return view('pay',compact('orden','cant'));
 })->name('pay');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/carrito/{orden}', function (Orden $orden) {
+    return view('carrito',compact('orden'));
+})->name('carrito');
 
 
