@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 
 class Carrito extends Component
 {
@@ -30,6 +32,8 @@ class Carrito extends Component
 
         $this->total = $this->envio + $this->subtotal;
         $this->signature = hash('md5', '4Vj8eK4rloUd272L48hsrarnUA~508029~'.$this->referenceCode.'~'.$this->total.'~COP');
+
+        //dd($this->orden->Products->first());
         
         return view('livewire.carrito');
     }

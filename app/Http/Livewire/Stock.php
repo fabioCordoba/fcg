@@ -143,7 +143,7 @@ class Stock extends Component
         return redirect()->route('pay', ['orden' => $orden, 'cant' => $this->contVerP]);
     }
 
-    public function orderCar(){
+    public function orderCar($id, $typeOrden){
 
         $ultimo = Orden::all();
         
@@ -160,17 +160,32 @@ class Stock extends Component
             'user_id' => Auth::user()->id
         ]);
 
-        foreach ($this->carrito as $key => $value) {
-            
+        if ($typeOrden == 'OrdenCar' && $id == 0) {
+
+            foreach ($this->carrito as $key => $value) {
+                
+                OrdenProductos::create([
+                    'orden_id' => $orden->id,
+                    'product_id' => $value['id'],
+                    'cant' => $value['cant']
+                ]);
+            }
+    
+            return redirect()->route('carrito', ['orden' => $orden]);
+        }else if ($typeOrden == 'OrderNow' && $id != 0) {
+
+            $producto = Products::find($id);
+
             OrdenProductos::create([
                 'orden_id' => $orden->id,
-                'product_id' => $value['id'],
-                'cant' => $value['cant']
+                'product_id' => $producto->id,
+                'cant' => $this->contVerP
             ]);
+
+            //return redirect()->route('pay', ['orden' => $producto, 'cant' => $this->contVerP]);
+            return redirect()->route('carrito', ['orden' => $orden]);
         }
 
-        //dd($orden, $codigo, $orden->Products);
-        return redirect()->route('carrito', ['orden' => $orden]);
     }
 
     public function render()
