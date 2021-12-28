@@ -8,7 +8,7 @@ use App\Models\Subcategoria;
 
 class Carrito extends Component
 {
-    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId;
+    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl;
 
     public function render()
     {
@@ -17,8 +17,7 @@ class Carrito extends Component
         $this->subtotal = 0;
         $this->envio = 10000;
         $this->description = '';
-        $this->referenceCode = 'fcgPayU'.$this->orden->codigo;
-        
+        $this->referenceCode = $this->orden->codigo;
 
         foreach ($this->orden->Products as $product) {
             if($this->description == ''){
@@ -31,7 +30,7 @@ class Carrito extends Component
         }
 
         $this->total = $this->envio + $this->subtotal;
-        $this->signature = hash('md5', '4Vj8eK4rloUd272L48hsrarnUA~508029~'.$this->referenceCode.'~'.$this->total.'~COP');
+        $this->signature = hash('md5', '4Vj8eK4rloUd272L48hsrarnUA~'.$this->merchantId.'~'.$this->referenceCode.'~'.$this->total.'~COP');
 
         //dd($this->orden->Products->first());
         

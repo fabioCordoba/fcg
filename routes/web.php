@@ -45,4 +45,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/carrito/{orden}', functio
     return view('carrito',compact('orden'));
 })->name('carrito');
 
+Route::get('response', [App\Http\Controllers\paymentController::class, 'Payu'])->middleware('auth')->name('response');
+
 
