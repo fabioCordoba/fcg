@@ -22,6 +22,7 @@ class CreatePagosTable extends Migration
             $table->string('TX_VALUE');
             $table->string('buyerEmail');
             $table->string('processingDate');
+            $table->string('lapResponseCode');
             $table->timestamps();
         });
     }

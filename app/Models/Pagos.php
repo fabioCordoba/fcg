@@ -16,6 +16,7 @@ class Pagos extends Model
         'transactionId',
         'TX_VALUE',
         'buyerEmail',
-        'processingDate'
+        'processingDate',
+        'lapResponseCode'
     ];
 }
