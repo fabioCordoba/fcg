@@ -12,7 +12,9 @@ class Orden extends Model
     protected $fillable = [
         'codigo',
         'estado',
-        'user_id'
+        'user_id',
+        'shippingCity',
+        'shippingAddress'
     ];
 
     public function Products()

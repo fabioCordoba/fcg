@@ -13,9 +13,9 @@
         <input name="buyerEmail"      type="hidden"  value="{{Auth::user()->email}}" >
         <input name="responseUrl"     type="hidden"  value="{{ URL::to('/') }}/response" >
         <input name="confirmationUrl" type="hidden"  value="{{ URL::to('/') }}/confirmation" >
-        {{--<input name="shippingAddress"    type="hidden"  value="calle 93 n 47 - 65"   >
-        <input name="shippingCity"       type="hidden"  value="Bogotá" >
-        <input name="shippingCountry"    type="hidden"  value="CO"  >--}}
+        <input name="shippingAddress"    type="hidden"  value="{{$orden->shippingAddress}}">
+        <input name="shippingCity"       type="hidden"  value="{{$orden->shippingCity}}" >
+        <input name="shippingCountry"    type="hidden"  value="CO"  >
         <input name="Submit"          type="submit"  value="Continuar con el Pago" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
       </form>
     

@@ -1,4 +1,6 @@
 <div>
+    @include('livewire.carrito.modal-direccion')
+
     @if ($orden->Products->count() > 1)
         <div class="container mx-auto px-6">
             <div class="md:flex md:items-center">
@@ -50,7 +52,11 @@
 
                         </div>
                     </div>  
-                    @include('livewire.product.button-payU')
+                    @if ($orden->shippingAddress == null)
+                        <button wire:click="addDir('direccion')" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> agregar direccion de envio</button>
+                    @else
+                        @include('livewire.product.button-payU')
+                    @endif
                 </div>
             </div>
         </div>
@@ -121,7 +127,12 @@
                                 
                             </div>
                         </div>
-                        @include('livewire.product.button-payU')
+
+                        @if ($orden->shippingAddress == null)
+                            <button wire:click="addDir('direccion')" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> agregar direccion de envio</button>
+                        @else
+                            @include('livewire.product.button-payU')
+                        @endif
                         
                         
                     </div>

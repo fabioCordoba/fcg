@@ -8,7 +8,26 @@ use App\Models\Subcategoria;
 
 class Carrito extends Component
 {
-    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl;
+    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity;
+
+    public function closeModal($modal){
+        $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
+    }
+    
+    public function addDir($modal)
+    {
+        $this->dispatchBrowserEvent('openModal', ['modal' => $modal]);
+    }
+
+    public function pusDir()
+    {
+        $this->orden->update([
+            'shippingCity' => $this->shippingCity,
+            'shippingAddress' => $this->shippingAddress
+        ]);
+
+        $this->dispatchBrowserEvent('closeModal', ['modal' => 'direccion']);
+    }
 
     public function render()
     {
@@ -18,6 +37,7 @@ class Carrito extends Component
         $this->envio = 10000;
         $this->description = '';
         $this->referenceCode = $this->orden->codigo;
+        $this->shippingCity = 'Monteria';
 
         foreach ($this->orden->Products as $product) {
             if($this->description == ''){
