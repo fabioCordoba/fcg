@@ -8,14 +8,14 @@
             </div>
             <div class="modal-body" style="padding: 10px;">
                 <div x-data="{ cartOpen: false , isOpen: false }" class="bg-white">
-                    <main class="my-8">
+                    <main class="my-1">
                         <div class="container mx-auto px-6">
                             @if ($productemp)
                                 <div class="md:flex md:items-center">
                                     <div class="w-full h-64 md:w-1/2 lg:h-96">
                                         <img class="h-full w-full rounded-md object-cover max-w-lg mx-auto" src="{{asset($productemp->foto)}}" alt="{{$productemp->nombre}}">
                                     </div>
-                                    <div class="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2">
+                                    <div class="w-full max-w-lg mx-auto mt-1 md:ml-8 md:mt-0 md:w-1/2">
                                         <h3 class="text-indigo-700 uppercase text-lg">{{$productemp->nombre}}</h3>
                                         <h4 class="text-gray-600  text-sm">{{$productemp->subCategoryProduct->Category->name}}/{{$productemp->subCategoryProduct->name}}</h4>
                                         <p class="text-gray-500  mx-1">
@@ -36,9 +36,15 @@
                                             </div>
                                         </div>
                                         <div class="mt-3">
+                                            <label class="text-gray-700 text-sm" for="count">Producto disponible en:</label>
+                                            <div class="flex items-center mt-1">
+                                                <span class="text-indigo-500 text-sm mx-1">Monteria</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
                                             <label class="text-gray-700 text-sm" for="count">Pedidos:</label>
                                             <div class="flex items-center mt-1">
-                                                <span class="text-red-500 text-sm mx-1">Anticipacion de 2 Dias</span>
+                                                <span class="text-red-500 text-sm mx-1">Anticipacion de {{$productemp->anticipacionDias}} Dias</span>
                                             </div>
                                         </div>
                                         <div class="flex items-center mt-6">

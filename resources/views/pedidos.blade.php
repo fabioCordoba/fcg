@@ -1,7 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pedidos') }}
+          @if (Auth::user()->roles->implode('name', ',') == 'CLIENTE')
+              {{ __('Mis Pedidos') }}
+          @else
+              
+              {{ __('Pedidos') }}
+          @endif
         </h2>
     </x-slot>
 

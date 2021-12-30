@@ -96,6 +96,21 @@
                             </div>
 
                         </div>
+
+                        <div class="row">
+                            <div class="cc col-md-12">
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text font-italic" id="inputGroup-sizing-sm" style="color: black;">Dias de anticipacion</span>
+                                    </div>
+                            <!----> <input type="number" class="form-control" id="anticipacionDias" name="anticipacionDias" wire:model="anticipacionDias" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <div class="input-group-prepend input-group-append">
+                                        <span class="input-group-text font-italic" id="inputGroup-sizing-sm" style="color: black;">Cantidad Minima</span>
+                                    </div>
+                            <!----> <input type="number" class="form-control" aria-label="Sizing example input" id="cantidadMin" name="cantidadMin" wire:model="cantidadMin"  aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                            </div>
+                        </div>
         
                         <div class="row">
                             <div class="col-md-4">

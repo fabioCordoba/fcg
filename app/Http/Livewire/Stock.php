@@ -17,7 +17,7 @@ class Stock extends Component
 {
     use WithPagination;
 
-    public $textBusqueda, $carrito, $productemp, $productss, $type, $contVerP;
+    public $textBusqueda, $carrito, $productemp, $productss, $type, $contVerP, $contador;
 
     public function __construct()
     {
@@ -30,19 +30,20 @@ class Stock extends Component
         $this->textBusqueda = 'Todos Los Productos';
         $this->type = 'all';
         $this->contVerP = 1;
+        $this->contador = 1;
     }
 
     public function addCar($id, $sw){
 
         $prodTemp = Products::find($id);
 
-        if($this->contVerP > 1){
+        if($this->contVerP > $this->contador){
             $temp = [
                 'id' => $prodTemp->id,
                 'nombre' => $prodTemp->nombre,
                 'precio' => $prodTemp->precio,
                 'foto' => $prodTemp->foto,
-                'cant' => $this->contVerP
+                'cant' => $prodTemp->cantidadMin
             ];
         }else{
             $temp = [
@@ -50,7 +51,7 @@ class Stock extends Component
                 'nombre' => $prodTemp->nombre,
                 'precio' => $prodTemp->precio,
                 'foto' => $prodTemp->foto,
-                'cant' => 1
+                'cant' => $prodTemp->cantidadMin
             ];
         }
 
@@ -85,6 +86,8 @@ class Stock extends Component
 
     public function verprod($id, $modal){
         $this->productemp = Products::find($id);
+        $this->contVerP = $this->productemp->cantidadMin;
+        $this->contador = $this->productemp->cantidadMin;
         $this->dispatchBrowserEvent('openModal', ['modal' => $modal]);
     }
 
@@ -92,6 +95,7 @@ class Stock extends Component
         $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
         $this->productemp = null;
         $this->contVerP = 1;
+        $this->contador = 1;
     }
 
     public function search(){
@@ -106,10 +110,10 @@ class Stock extends Component
         if($var == 'mas'){
             $this->contVerP = $this->contVerP + 1;
         }else if($var == 'menos'){
-            if($this->contVerP != 1){
+            if($this->contVerP != $this->contador){
                 $this->contVerP = $this->contVerP - 1;
             }else{
-                $this->contVerP = 1;
+                $this->contVerP = $this->contador;
             }
         }
         //dd($id,$var);

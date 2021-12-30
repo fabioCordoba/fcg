@@ -8,7 +8,7 @@ use App\Models\Subcategoria;
 
 class Carrito extends Component
 {
-    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity;
+    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity, $limit;
 
     public function closeModal($modal){
         $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
@@ -38,6 +38,7 @@ class Carrito extends Component
         $this->description = '';
         $this->referenceCode = $this->orden->codigo;
         $this->shippingCity = 'Monteria';
+        $this->limit = 30000;
 
         foreach ($this->orden->Products as $product) {
             if($this->description == ''){

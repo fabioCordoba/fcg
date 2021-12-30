@@ -18,6 +18,8 @@ class ProductsSeeder extends Seeder
             'subcategoria_id' => 1,
             'nombre' => 'Pastel de Belém',
             'precio' => '2300',
+            'cantidadMin' => 1,
+            'anticipacionDias' => 2,
             'estado' => 'Activo'
         ]);
 
@@ -25,6 +27,8 @@ class ProductsSeeder extends Seeder
             'subcategoria_id' => 2,
             'nombre' => 'Dulces de chocolate ',
             'precio' => '4200',
+            'cantidadMin' => 10,
+            'anticipacionDias' => 1,
             'estado' => 'Activo'
         ]);
 
@@ -32,6 +36,8 @@ class ProductsSeeder extends Seeder
             'subcategoria_id' => 3,
             'nombre' => 'Dónuts',
             'precio' => '4500',
+            'cantidadMin' => 15,
+            'anticipacionDias' => 2,
             'estado' => 'Activo'
         ]);
 
@@ -39,6 +45,8 @@ class ProductsSeeder extends Seeder
             'subcategoria_id' => 4,
             'nombre' => 'Pan de cardamomo',
             'precio' => '1200',
+            'cantidadMin' => 12,
+            'anticipacionDias' => 2,
             'estado' => 'Activo'
         ]);
     }

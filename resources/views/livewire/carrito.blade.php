@@ -18,8 +18,15 @@
                                 <tbody>
                                     @foreach ($orden->Products as $product)
                                         <tr>
-                                            <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align:left;vertical-align:middle;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;word-wrap:break-word">
-                                                {{$product->Product->nombre}}		
+                                            <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align:left;vertical-align:middle;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;word-wrap:break-word" >
+                                                <div class="d-flex justify-content-left">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                      <img class="h-10 w-10 rounded-full" src="{{asset($product->Product->foto)}}" alt="">
+                                                    </div>
+                                                    <div class="px-2 py-2 ">
+                                                        {{$product->Product->nombre}}
+                                                      </div>
+                                                </div>
                                             </td>
                                             <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align:left;vertical-align:middle;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">
                                                 {{$product->cant}}
@@ -51,11 +58,17 @@
                             </table>
 
                         </div>
-                    </div>  
-                    @if ($orden->shippingAddress == null)
-                        <button wire:click="addDir('direccion')" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> agregar direccion de envio</button>
+                    </div> 
+                    
+                    @if ($total < $limit)
+                        <button class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> Lo sentimos, hacemos pedidos con valor total superior a $30.000</button>
                     @else
-                        @include('livewire.product.button-payU')
+                        
+                        @if ($orden->shippingAddress == null)
+                            <button wire:click="addDir('direccion')" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> agregar direccion de envio</button>
+                        @else
+                            @include('livewire.product.button-payU')
+                        @endif
                     @endif
                 </div>
             </div>
@@ -128,10 +141,16 @@
                             </div>
                         </div>
 
-                        @if ($orden->shippingAddress == null)
-                            <button wire:click="addDir('direccion')" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> agregar direccion de envio</button>
+
+                        @if ($total < $limit)
+                            <button class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> Lo sentimos, hacemos pedidos con valor total superior a $30.000</button>
                         @else
-                            @include('livewire.product.button-payU')
+                            
+                            @if ($orden->shippingAddress == null)
+                                <button wire:click="addDir('direccion')" class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500"> agregar direccion de envio</button>
+                            @else
+                                @include('livewire.product.button-payU')
+                            @endif
                         @endif
                         
                         

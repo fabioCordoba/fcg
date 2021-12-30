@@ -16,6 +16,8 @@ class Products extends Model
         'precio',
         'foto',
         'estado',
+        'anticipacionDias',
+        'cantidadMin'
     ];
 
     public function subCategoryProduct()

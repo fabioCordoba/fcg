@@ -14,7 +14,7 @@ class Productos extends Component
 {
     use WithFileUploads;
 
-    public $user, $product, $catego, $subCat, $nombre, $precio, $Descripcion, $foto, $swstore;
+    public $user, $product, $catego, $subCat, $nombre, $precio, $Descripcion, $foto, $swstore, $cantidadMin, $anticipacionDias;
     protected $listeners = ['say-delete' => 'delete'];
     
     public function abrirModal($id, $modal){
@@ -28,6 +28,8 @@ class Productos extends Component
             $this->nombre = $this->product->nombre;
             $this->Descripcion = $this->product->Descripcion;
             $this->precio = $this->product->precio;
+            $this->cantidadMin = $this->product->cantidadMin;
+            $this->anticipacionDias = $this->product->anticipacionDias;
             $this->foto = $this->product->foto;
             
             $this->dispatchBrowserEvent('openModal', ['modal' => 'Create']);
@@ -60,7 +62,10 @@ class Productos extends Component
                 'nombre' => 'required|unique:products',
                 'precio' => 'required',
                 'Descripcion' => 'required',
-                'foto' => 'required'
+                'foto' => 'required',
+                'anticipacionDias' => 'required',
+                'cantidadMin' => 'required',
+
             ]);
 
         }
@@ -74,6 +79,8 @@ class Productos extends Component
                 'subcategoria_id' => $this->subCat,
                 'nombre' => $this->nombre,
                 'Descripcion' => $this->Descripcion,
+                'cantidadMin' => $this->cantidadMin,
+                'anticipacionDias' => $this->anticipacionDias,
                 'precio' => $this->precio,
                 'foto' => $path,
                 'estado' => 'Activo'
@@ -95,6 +102,8 @@ class Productos extends Component
                 'nombre' => $this->nombre,
                 'Descripcion' => $this->Descripcion,
                 'precio' => $this->precio,
+                'cantidadMin' => $this->cantidadMin,
+                'anticipacionDias' => $this->anticipacionDias,
                 'foto' => $path,
                 'estado' => 'Activo'
 
@@ -119,6 +128,8 @@ class Productos extends Component
         $this->foto = null;
         $this->subCat = null;
         $this->catego = null;
+        $this->cantidadMin = null;
+        $this->anticipacionDias = null;
         $this->swstore = null;
     }
 

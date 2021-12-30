@@ -29,14 +29,19 @@
                 <!-- Navigation Product-->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('product') }}" :active="request()->routeIs('product')">
-                        {{ __('Product') }}
+                        {{ __('Productos') }}
                     </x-jet-nav-link>
                 </div>
 
                 <!-- Navigation Pedidos-->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('pedidos') }}" :active="request()->routeIs('pedidos')">
-                        {{ __('Pedidos') }}
+                        @if (Auth::user()->roles->implode('name', ',') == 'CLIENTE')
+                            {{ __('Mis Pedidos') }}
+                        @else
+                            
+                            {{ __('Pedidos') }}
+                        @endif
                     </x-jet-nav-link>
                 </div>
             </div>
