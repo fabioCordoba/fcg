@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Products;
 use App\Models\Orden;
+use App\Models\Pagos;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,25 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/carrito/{orden}', functio
 
 Route::get('response', [App\Http\Controllers\paymentController::class, 'Payu'])->middleware('auth')->name('response');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/ventas', function () {
+    return view('ventas');
+})->name('ventas');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/conf', function () {
+    $pago = Pagos::find(4);
+    $orden = Orden::where('codigo', $pago->referenceCode)->first();
+
+    //dd($pago, $orden);
+    if($pago->transactionState == 4){
+
+        $header = 'Pago Exitoso';
+
+    }else if ($pago->transactionState == 6) {
+
+        $header = 'Transacciones Declinada';
+        
+    }else if ($pago->transactionState == 7) {
+        $header = 'Transacciones Pendiente';
+    }
+    return view('confirmacionPay',compact('pago','orden', 'header'));
+})->name('conf');

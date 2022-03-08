@@ -14,7 +14,8 @@ class Orden extends Model
         'estado',
         'user_id',
         'shippingCity',
-        'shippingAddress'
+        'shippingAddress',
+        'metodoEnvio'
     ];
 
     public function Products()

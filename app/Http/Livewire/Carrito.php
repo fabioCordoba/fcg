@@ -8,7 +8,7 @@ use App\Models\Subcategoria;
 
 class Carrito extends Component
 {
-    public $orden, $subtotal, $envio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity, $limit;
+    public $shipping, $orden, $subtotal, $envio, $metodoEnvio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity, $limit;
 
     public function closeModal($modal){
         $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
@@ -21,20 +21,33 @@ class Carrito extends Component
 
     public function pusDir()
     {
-        $this->orden->update([
-            'shippingCity' => $this->shippingCity,
-            'shippingAddress' => $this->shippingAddress
-        ]);
+        //dd($this->metodoEnvio);
 
+        if($this->metodoEnvio == 0){
+
+            $this->envio = $this->metodoEnvio;
+            $this->orden->update([
+                'metodoEnvio' => $this->metodoEnvio
+            ]);
+            
+        }else{
+            
+            $this->orden->update([
+                'shippingCity' => $this->shippingCity,
+                'shippingAddress' => $this->shippingAddress,
+                'metodoEnvio' => $this->metodoEnvio
+            ]);
+        }
+
+
+        $this->pay();
         $this->dispatchBrowserEvent('closeModal', ['modal' => 'direccion']);
     }
 
-    public function render()
-    {
+    public function pay(){
         $this->merchantId = 508029;
         $this->accountId = 512321;
         $this->subtotal = 0;
-        $this->envio = 10000;
         $this->description = '';
         $this->referenceCode = $this->orden->codigo;
         $this->shippingCity = 'Monteria';
@@ -50,9 +63,20 @@ class Carrito extends Component
             $this->subtotal = $this->subtotal + ($product->Product->precio * $product->cant);
         }
 
-        $this->total = $this->envio + $this->subtotal;
+        if($this->orden->metodoEnvio != 0){
+            $this->description = $this->description.', + Domicilio';
+        }
+
+        $this->total = $this->orden->metodoEnvio + $this->subtotal;
+
         $this->signature = hash('md5', '4Vj8eK4rloUd272L48hsrarnUA~'.$this->merchantId.'~'.$this->referenceCode.'~'.$this->total.'~COP');
 
+    }
+
+    public function render()
+    {
+        $this->shipping = false;
+        $this->pay();
         //dd($this->orden->Products->first());
         
         return view('livewire.carrito');

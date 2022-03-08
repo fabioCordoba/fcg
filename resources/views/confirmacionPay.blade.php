@@ -5,67 +5,131 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <main class="my-2">
-                    <div class="container mx-auto px-6">
+    <div class="py-1">
 
-                        @if ($pago->transactionState == 4)
-                            <div >
-                                <div class="text-center flex flex-col p-4 md:justify-between md:p-12 bg-blue-100 rounded-md">
-                                    <div class="text-2xl font-semibold">
-                                        <div class="text-gray-900">Hola, {{Auth::user()->name}}. Gracias por confiar en nuestros servicios</div>
-                                        <div class="text-blue-500">Hemos recibido tu pedido y nos pondremos a trabajar en ello cuanto antes.</div>
-                                        <div class="w-full max-w-lg mx-auto mt-2 md:ml-8 md:mt-0 ">
-                                            <h3 class="text-indigo-700 uppercase text-lg">Detalles de la compra</h3>
-                                            <h4 class="text-gray-600  text-sm">Codigo de Referencia: {{$pago->referenceCode}}</h4>
-                                            <h4 class="text-gray-600  text-sm">Valor: ${{$pago->TX_VALUE}}</h4>
-                                            <h4 class="text-gray-600  text-sm">fecha transaccion: {{$pago->processingDate}}</h4>
-                                            
-                                        </div>
-                                        <h4 class="text-gray-600  text-sm">Puedes ver el estado de tu pedido <a class="px-1 py-0 bg-indigo-600 text-white text-sm  rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500" href="{{route('pedidos')}}">aqui</a></h4>
-                                    </div>
-                                </div>
+        <div class="container mx-auto">
+            <div class="flex justify-center px-6 my-2">
+                @if ($pago->transactionState == 4)
+                    <!-- Row -->
+                    <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                        <!-- Col -->
+                        <div
+                            class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
+                            style="background-image: url('{{asset('images/jpg/pexels-mikhail-nilov-6958009.jpg')}}')"
+                        ></div>
+                        <!-- Col -->
+                        <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+                            <div class="px-8 mb-4 text-center">
+                                <h3 class="pt-4 mb-2 text-2xl">Hola, {{Auth::user()->name}}</h3>
+                                <p class="mb-4 text-sm text-gray-700">
+                                    Gracias por confiar en nuestros servicios, Hemos recibido tu pedido y nos pondremos a trabajar en ello cuanto antes.
+                                </p>
                             </div>
-                        @elseif ($pago->transactionState == 6)
-                            <div >
-                                <div class="text-center flex flex-col p-4 md:justify-between md:p-12 bg-red-100 rounded-md">
-                                    <div class="text-2xl font-semibold">
-                                        <div class="text-gray-900">Hola, {{Auth::user()->name}}. Tu transaccion fue declinada</div>
-                                        <div class="text-red-500">intenta con otro medio de pago.</div>
-                                        <div class="w-full max-w-lg mx-auto mt-2 md:ml-8 md:mt-0 ">
-                                            <h3 class="text-indigo-700 uppercase text-lg">Detalles de la compra</h3>
-                                            <h4 class="text-gray-600  text-sm">Codigo de Referencia: {{$pago->referenceCode}}</h4>
-                                            <h4 class="text-gray-600  text-sm">Valor: ${{$pago->TX_VALUE}}</h4>
-                                            <h4 class="text-gray-600  text-sm">fecha transaccion: {{$pago->processingDate}}</h4>
-                                            
-                                        </div>
-                                        <h4 class="text-gray-600  text-sm">Puedes ver el estado de tu pedido <a class="px-1 py-0 bg-indigo-600 text-white text-sm  rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500" href="{{route('pedidos')}}">aqui</a></h4>
-                                    </div>
+                            <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                                <div class="mb-4">
+                                    <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+                                        Detalles de la compra
+                                    </label>
+                                    <ul>
+                                        <li><h4 class="text-gray-600  text-sm">Codigo de Referencia: {{$pago->referenceCode}}</h4></li>
+                                        <li><h4 class="text-gray-600  text-sm">Valor: ${{$pago->TX_VALUE}}</h4></li>
+                                        <li><h4 class="text-gray-600  text-sm">Fecha Transaccion: {{$pago->processingDate}}</h4></li>         
+                                    </ul>
                                 </div>
-                            </div>
-                        @elseif ($pago->transactionState == 7 || $pago->transactionState == 14 )
-                            <div >
-                                <div class="text-center flex flex-col p-4 md:justify-between md:p-12 bg-red-100 rounded-md">
-                                    <div class="text-2xl font-semibold">
-                                        <div class="text-gray-900">Hola, {{Auth::user()->name}}. Tu transaccion esta en estado pendiente</div>
-                                        
-                                        <div class="w-full max-w-lg mx-auto mt-2 md:ml-8 md:mt-0 ">
-                                            <h3 class="text-indigo-700 uppercase text-lg">Detalles de la compra</h3>
-                                            <h4 class="text-gray-600  text-sm">Codigo de Referencia: {{$pago->referenceCode}}</h4>
-                                            <h4 class="text-gray-600  text-sm">Valor: ${{$pago->TX_VALUE}}</h4>
-                                            <h4 class="text-gray-600  text-sm">fecha transaccion: {{$pago->processingDate}}</h4>
-                                            
-                                        </div>
-                                        <h4 class="text-gray-600  text-sm">Puedes ver el estado de tu pedido <a class="px-1 py-0 bg-indigo-600 text-white text-sm  rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500" href="{{route('pedidos')}}">aqui</a></h4>
-                                    </div>
+                                <hr class="mb-6 border-t" />
+                                <div class="text-center">
+                                    <a
+                                        class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                                        href="{{route('pedidos')}}"
+                                    >
+                                        Puedes ver el estado de tu pedido, Aqui
+                                    </a>
                                 </div>
-                            </div>
-                        @endif
-                        
+                            </form>
+                        </div>
                     </div>
-                </main>
+                @elseif ($pago->transactionState == 6)
+                    <!-- Row -->
+                    <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                        <!-- Col -->
+                        <div
+                            class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
+                            style="background-image: url('{{asset('images/jpg/pexels-monstera-7114083.jpg')}}')"
+                        ></div>
+                        <!-- Col -->
+                        <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+                            <div class="px-8 mb-4 text-center">
+                                <h3 class="pt-4 mb-2 text-2xl">Hola, {{Auth::user()->name}}</h3>
+                                <p class="mb-4 text-sm text-gray-700">
+                                    La transacción <span class=" text-sm text-red-500 align-baseline">{{$pago->transactionId}}</span>  fue <span class=" text-sm text-red-500 align-baseline">rechazada</span>, intenta mas tarde o con un nuevo metodo de pago.
+                                </p>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                                <div class="mb-4">
+                                    <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+                                        Detalles de la compra
+                                    </label>
+                                    <ul>
+                                        <li><h4 class="text-gray-600  text-sm">Codigo de Referencia: {{$pago->referenceCode}}</h4></li>
+                                        <li><h4 class="text-gray-600  text-sm">Valor: ${{$pago->TX_VALUE}}</h4></li>
+                                        <li><h4 class="text-gray-600  text-sm">Fecha Transaccion: {{$pago->processingDate}}</h4></li>         
+                                    </ul>
+                                </div>
+                                <hr class="mb-6 border-t" />
+                                <div class="text-center">
+                                    <a
+                                        class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                                        href="{{route('pedidos')}}"
+                                    >
+                                        Puedes ver el estado de tu pedido, Aqui
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @elseif ($pago->transactionState == 7 || $pago->transactionState == 14 )
+                    <!-- Row -->
+                    <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                        <!-- Col -->
+                        <div
+                            class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
+                            style="background-image: url('{{asset('images/jpg/pexels-shvets-production-7525159.jpg')}}')"
+                        ></div>
+                        <!-- Col -->
+                        <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+                            <div class="px-8 mb-4 text-center">
+                                <h3 class="pt-4 mb-2 text-2xl">Hola, {{Auth::user()->name}}</h3>
+                                <p class="mb-4 text-sm text-gray-700">
+                                    Gracias por confiar en nuestros servicios, tu transaccion esta en estado <span  class="text-sm text-red-600 align-baseline">pendiente</span>, una vez efectues el pago envianos tu comprobante de pago a nuestro Whatsapp para empezar a trabajar en tu orden.
+                                </p>
+                            </div>
+                            <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                                <div class="mb-4">
+                                    <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+                                        Detalles de la compra
+                                    </label>
+                                    <ul>
+                                        <li><h4 class="text-gray-600  text-sm">Codigo de Referencia: {{$pago->referenceCode}}</h4></li>
+                                        <li><h4 class="text-gray-600  text-sm">Valor: ${{$pago->TX_VALUE}}</h4></li>
+                                        <li><h4 class="text-gray-600  text-sm">Fecha Transaccion: {{$pago->processingDate}}</h4></li>         
+                                    </ul>
+                                </div>
+                                <hr class="mb-6 border-t" />
+                                <div class="text-center">
+                                    <a
+                                        class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                                        href="{{route('pedidos')}}"
+                                    >
+                                        Puedes ver el estado de tu pedido, Aqui
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

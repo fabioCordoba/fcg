@@ -10,7 +10,6 @@ class paymentController extends Controller
 {
     public function Payu(Request $request)
     {
-        
         $pago = Pagos::create([
             'transactionState' => $request->transactionState,
             'lapTransactionState' => $request->lapTransactionState,

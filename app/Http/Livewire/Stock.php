@@ -159,7 +159,7 @@ class Stock extends Component
         
         $codigo = sprintf("%05d", $codigo);
         $orden = Orden::create([
-            'codigo' => 'fcgPayUtest'.$codigo,
+            'codigo' => 'fcgPayUtest1'.$codigo,
             'estado' => 'En Proceso',
             'user_id' => Auth::user()->id
         ]);

@@ -44,6 +44,15 @@
                         @endif
                     </x-jet-nav-link>
                 </div>
+
+                @role('ROOT|ADMINISTRADOR')
+                <!-- Navigation ventas-->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('ventas') }}" :active="request()->routeIs('ventas')">
+                        {{ __('Ventas') }}
+                    </x-jet-nav-link>
+                </div>
+                @endrole
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -213,3 +222,7 @@
         </div>
     </div>
 </nav>
+
+
+
+
