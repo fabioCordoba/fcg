@@ -22,4 +22,9 @@ class Orden extends Model
     {
         return $this->hasMany('App\Models\OrdenProductos', 'orden_id');
     }
+
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\notification', 'orden_id');
+    }
 }

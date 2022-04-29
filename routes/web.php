@@ -70,3 +70,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/conf', function () {
     }
     return view('confirmacionPay',compact('pago','orden', 'header'));
 })->name('conf');
+
+Route::get('fire', [App\Http\Controllers\OrdenController::class, 'fire'])->name('fire');

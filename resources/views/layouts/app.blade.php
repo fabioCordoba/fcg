@@ -18,6 +18,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+        <link rel="stylesheet" href="{!! asset('vendors/feather/feather.css')!!}">
+        <link rel="stylesheet" href="{!! asset('vendors/mdi/css/materialdesignicons.min.css')!!}">
+        <link rel="stylesheet" href="{!! asset('vendors/ti-icons/css/themify-icons.css')!!}">
+        <link rel="stylesheet" href="{!! asset('vendors/typicons/typicons.css')!!}">
+        <link rel="stylesheet" href="{!! asset('vendors/simple-line-icons/css/simple-line-icons.css')!!}">
+        <link rel="stylesheet" href="{!! asset('vendors/css/vendor.bundle.base.css')!!}">
 
         <!-- Scripts -->
         <script src="{{ asset('js/jquery-3.6.0.min.js') }}" ></script>
@@ -25,6 +32,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans antialiased">
+
+        <livewire:app />
 
         
         <x-jet-banner />
@@ -52,6 +61,7 @@
         
         <script src="{{ asset('js/toastr.min.js') }}"></script>
         <script src="{{ asset('js/helper.js') }}"></script>
+        <script src="{!! asset('vendors/js/vendor.bundle.base.js')!!}"></script>
         @livewireScripts
     </body>
 </html>
