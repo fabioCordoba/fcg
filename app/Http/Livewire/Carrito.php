@@ -8,8 +8,8 @@ use App\Models\Subcategoria;
 
 class Carrito extends Component
 {
-    public $shipping, $orden, $subtotal, $envio, $metodoEnvio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity, $limit;
-
+    public $shipping, $orden, $subtotal, $envio, $metodoEnvio, $total, $description, $referenceCode, $signature, $merchantId, $accountId, $responseUrl, $shippingAddress, $shippingCity, $limit, $btnDom, $btnShop;
+    
     public function closeModal($modal){
         $this->dispatchBrowserEvent('closeModal', ['modal' => $modal]);
     }
@@ -21,7 +21,9 @@ class Carrito extends Component
 
     public function pusDir()
     {
-        //dd($this->metodoEnvio);
+        $validatedData = $this->validate([
+            'metodoEnvio' => 'required',
+        ]);
 
         if($this->metodoEnvio == 0){
 
@@ -32,6 +34,10 @@ class Carrito extends Component
             
         }else{
             
+            $validatedData = $this->validate([
+                'shippingAddress' => 'required',
+            ]);
+            
             $this->orden->update([
                 'shippingCity' => $this->shippingCity,
                 'shippingAddress' => $this->shippingAddress,
@@ -39,6 +45,7 @@ class Carrito extends Component
             ]);
         }
 
+        $this->metodoEnvio == null;
 
         $this->pay();
         $this->dispatchBrowserEvent('closeModal', ['modal' => 'direccion']);
@@ -77,7 +84,7 @@ class Carrito extends Component
     {
         $this->shipping = false;
         $this->pay();
-        //dd($this->orden->Products->first());
+        //dd($this->metodoEnvio);
         
         return view('livewire.carrito');
     }

@@ -47,6 +47,7 @@ window.addEventListener('UserUpdate', event => {
     MsgDetallado('alert-success', 'Registro Eliminado con exito...');
 });
 
+
 /**
  * Evento para validar la eliminar Registro
  */
@@ -201,3 +202,5 @@ function token(){
 function cleanForm(idformulario) {
     $('#'+idformulario)[0].reset();
 }
+
+

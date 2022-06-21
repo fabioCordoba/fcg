@@ -75,25 +75,117 @@
                             <button class="flex text-sm text-gray-500 ml-8 focus:outline-none" disabled><span class="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">3</span> Payments</button>
                         </div>
                         <div class="mt-8 lg:w-3/4">
-                            <div>
-                                <h4 class="text-sm text-gray-500 font-medium">Método de entrega</h4>
-                                <div class="mt-6">
-                                    <button type="button" class="flex items-center justify-between w-full bg-white rounded-md border-2 border-blue-500 p-4 focus:outline-none">
-                                        <label class="flex items-center">
-                                            <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="10000" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Entrega a Domicilio</span>
-                                        </label>
-    
-                                        <span class="text-gray-600 text-sm">$10000</span>
-                                    </button>
-                                    <button type="button" class="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
-                                        <label class="flex items-center">
-                                            <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="0" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Recoger En Tienda</span>
-                                        </label>
-    
-                                        <span class="text-gray-600 text-sm">$0</span>
-                                    </button>
+                            @if ($orden->metodoEnvio == null)
+                                <div>
+                                    <h4 class="text-sm text-gray-500 font-medium">Método de entrega</h4>
+                                    <div class="mt-6">
+                                        @if ($metodoEnvio == 10000)
+                                            <button type="button" class="flex items-center justify-between w-full bg-white rounded-md border-2  p-4 focus:outline-none border-blue-500" >
+                                                <label class="flex items-center">
+                                                    <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="10000" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Entrega a Domicilio</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$10000</span>
+                                            </button>
+                                            
+                                            <button type="button" class="mt-6 flex items-center justify-between w-full bg-white rounded-md border-2 p-4 focus:outline-none">
+                                                <label class="flex items-center">
+                                                    <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="0" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Recoger En Tienda</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$0</span>
+                                            </button>
+                                        @elseif($metodoEnvio == null && $orden->metodoEnvio == null)
+                                            <button type="button" class="flex items-center justify-between w-full bg-white rounded-md border-2  p-4 focus:outline-none " >
+                                                <label class="flex items-center">
+                                                    <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="10000" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Entrega a Domicilio</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$10000</span>
+                                            </button>
+                                            
+                                            <button type="button" class="mt-6 flex items-center justify-between w-full bg-white rounded-md border-2 p-4 focus:outline-none ">
+                                                <label class="flex items-center">
+                                                    <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="0" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Recoger En Tienda</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$0</span>
+                                            </button>
+                                        @else
+                                            <button type="button" class="flex items-center justify-between w-full bg-white rounded-md border-2  p-4 focus:outline-none" >
+                                                <label class="flex items-center">
+                                                    <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="10000" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Entrega a Domicilio</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$10000</span>
+                                            </button>
+                                            
+                                            <button type="button" class="mt-6 flex items-center justify-between w-full bg-white rounded-md border-2 p-4 focus:outline-none border-blue-500">
+                                                <label class="flex items-center">
+                                                    <input type="radio" class="form-radio h-5 w-5 text-blue-600" value="0" id="metodoEnvio" name="metodoEnvio" wire:model="metodoEnvio"><span class="ml-2 text-sm text-gray-700">Recoger En Tienda</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$0</span>
+                                            </button>
+                                            
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+                                
+                            @else
+                                <div>
+                                    <h4 class="text-sm text-gray-500 font-medium">Método de entrega</h4>
+                                    <div class="mt-6">
+                                        @if ($orden->metodoEnvio == '10000')
+                                            <button type="button" class="flex items-center justify-between w-full bg-white rounded-md border-2  p-4 focus:outline-none border-blue-500" >
+                                                <label class="flex items-center">
+                                                    <input type="radio" checked class="form-radio h-5 w-5 text-blue-600" ><span class="ml-2 text-sm text-gray-700">Entrega a Domicilio</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$10000</span>
+                                            </button>
+                                            
+                                            <button type="button" class="mt-6 flex items-center justify-between w-full bg-white rounded-md border-2 p-4 focus:outline-none">
+                                                <label class="flex items-center">
+                                                    <input type="radio" disabled class="form-radio h-5 w-5 text-blue-600" ><span class="ml-2 text-sm text-gray-700">Recoger En Tienda</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$0</span>
+                                            </button>
+                                        @else
+                                            <button type="button" class="flex items-center justify-between w-full bg-white rounded-md border-2  p-4 focus:outline-none" >
+                                                <label class="flex items-center">
+                                                    <input type="radio" disabled class="form-radio h-5 w-5 text-blue-600" ><span class="ml-2 text-sm text-gray-700">Entrega a Domicilio</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$10000</span>
+                                            </button>
+                                            
+                                            <button type="button" class="mt-6 flex items-center justify-between w-full bg-white rounded-md border-2 p-4 focus:outline-none border-blue-500">
+                                                <label class="flex items-center">
+                                                    <input type="radio" checked class="form-radio h-5 w-5 text-blue-600" ><span class="ml-2 text-sm text-gray-700">Recoger En Tienda</span>
+                                                </label>
+            
+                                                <span class="text-gray-600 text-sm">$0</span>
+                                            </button>
+                                            
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if ($errors->any())
+                            <br>
+                                <div class="alert alert-warning" role="alert">
+                                    <strong class="font-bold">Error!</strong>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
+                                    </ul>
+                                    </span>
+                                </div>
+                            @endif
 
                             @if ($metodoEnvio == 10000)    
                             <div class="mt-8">
@@ -111,6 +203,7 @@
                                 </div>
                             </div>
                             @endif
+                            
                             <div class="mt-8">
                                 <h4 class="text-sm text-gray-500 font-medium">Date</h4>
                                 <div class="mt-6 flex">
