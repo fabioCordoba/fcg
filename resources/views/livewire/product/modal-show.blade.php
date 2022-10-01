@@ -14,7 +14,7 @@
         <p>
             {{$product->Descripcion}}
         </p>
-        <div class="text-center mt-2 font-normal text-sm">Cant Min: {{$product->cantidadMin}} - Dias Antisipacion: {{$product->anticipacionDias}}</div>
+        <div class="text-center mt-2 font-normal text-sm">Cant Min: {{$product->cantidadMin}} - Dias Antisipacion: {{$product->anticipacionDias}} - Cant Stock: {{$product->stock}} </div>
         </div>
         
         <div class="modal-header">

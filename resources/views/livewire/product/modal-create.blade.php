@@ -87,6 +87,16 @@
                             </div>
 
                             <div class="cc col-md-6">
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text font-italic" id="inputGroup-sizing-sm" style="color: black;">Stock</span>
+                                    </div>
+                            <!----> <input type="number" class="form-control" id="stock" name="stock" wire:model="stock" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="cc col-md-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Foto</label>
                                     <input type="file"  id="foto" name="foto" wire:model="foto"  aria-describedby="inputGroup-sizing-sm">

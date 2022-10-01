@@ -14,7 +14,7 @@ class Productos extends Component
 {
     use WithFileUploads;
 
-    public $user, $product, $catego, $subCat, $nombre, $precio, $Descripcion, $foto, $swstore, $cantidadMin, $anticipacionDias;
+    public $user, $product, $catego, $subCat, $nombre, $precio, $Descripcion, $foto, $stock, $swstore, $cantidadMin, $anticipacionDias;
     protected $listeners = ['say-delete' => 'delete'];
     
     public function abrirModal($id, $modal){
@@ -31,6 +31,7 @@ class Productos extends Component
             $this->cantidadMin = $this->product->cantidadMin;
             $this->anticipacionDias = $this->product->anticipacionDias;
             $this->foto = $this->product->foto;
+            $this->stock = $this->product->stock;
             
             $this->dispatchBrowserEvent('openModal', ['modal' => 'Create']);
 
@@ -65,6 +66,7 @@ class Productos extends Component
                 'foto' => 'required',
                 'anticipacionDias' => 'required',
                 'cantidadMin' => 'required',
+                'stock' => 'required',
 
             ]);
 
@@ -82,6 +84,7 @@ class Productos extends Component
                 'cantidadMin' => $this->cantidadMin,
                 'anticipacionDias' => $this->anticipacionDias,
                 'precio' => $this->precio,
+                'stock' =>$this->stock,
                 'foto' => $path,
                 'estado' => 'Activo'
             ]);
@@ -104,6 +107,7 @@ class Productos extends Component
                 'precio' => $this->precio,
                 'cantidadMin' => $this->cantidadMin,
                 'anticipacionDias' => $this->anticipacionDias,
+                'stock' =>$this->stock,
                 'foto' => $path,
                 'estado' => 'Activo'
 
@@ -131,6 +135,7 @@ class Productos extends Component
         $this->cantidadMin = null;
         $this->anticipacionDias = null;
         $this->swstore = null;
+        $this->stock = null;
     }
 
     public function delProduct($id){
